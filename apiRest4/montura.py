@@ -398,6 +398,26 @@ class montura(monturaGloria):
     def setHome(self, home):
         print('Seleccionar el home')
 
+    # Aparca el telescopio
+    def park(self):
+        mensaje = ':hP#'
+        self.serial.enviar(mensaje)
+
+    # Mover el telescopio en una direccion
+    def moverNorte(self):
+        mensaje = ':Mn#'
+        self.serial.enviar(mensaje)            
+    def moverSur(self):
+        mensaje = ':Ms#'
+        self.serial.enviar(mensaje)            
+    def moverEste(self):
+        mensaje = ':Me#'
+        self.serial.enviar(mensaje)            
+    def moverOeste(self):
+        mensaje = ':Mw#'
+        self.serial.enviar(mensaje)            
+
+
     # Emplear?    
     def detenerMovimiento(self, noBloquear = False):
         self.permitirMovimiento = noBloquear
