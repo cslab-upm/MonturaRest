@@ -4,8 +4,8 @@ from threading import Lock
 class gestorSerie:
 
     ser = None
-    # puerto = '/dev/ttyUSB0' Para linux
-    puerto = 'COM4' #Puerto al que se conecta
+    puerto = '/dev/ttyUSB0' #Para linux
+    #puerto = 'COM4' #Puerto al que se conecta
     mutex = Lock() #Mutex para toda la clase, ya que varias instancias pueden intentar enviar al mismo timepo
 
     '''
@@ -50,7 +50,7 @@ class gestorSerie:
         Envia mensaje or el puero serial.
         mensaje => Mensaje a enviar
         respuesta => Si es true se espera recibir una respuesta y se retorna la respuesta
-        tamRespuesta => Si se espera respuesta se puede especificar el tamaño, si no se especifica coge todo lo que le responda
+        tamRespuesta => Si se espera respuesta se puede especificar el tamanyo, si no se especifica coge todo lo que le responda
     '''
     def enviar(self,mensaje, respuesta = False, tamRespuesta = 0):
         self.mutex.acquire()

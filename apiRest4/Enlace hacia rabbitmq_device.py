@@ -1,0 +1,1 @@
+/home/daniel/proyectos/telescopio/MonturaRest/apiRest4/rabbitmq_device/rabbitmq_device.py

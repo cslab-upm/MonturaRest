@@ -4,6 +4,7 @@ from gestorSerie import gestorSerie as ser
 from threading import Thread, Timer
 import time, json
 import gestorLoggings as gl
+import rabbitmq_device as rmq 
 
 class montura(monturaGloria):
 
@@ -12,6 +13,7 @@ class montura(monturaGloria):
     home = None
     permitirMovimiento = True
     cola = None
+    sender = rmq.RabbitMQ_sender('montura', "192.168.1.5")
 
     # Posicion
     az = '+00:00:00'
@@ -57,9 +59,12 @@ class montura(monturaGloria):
             self.serial.setPuerto(puerto)
         print('Puerto abierto: ' +self.serial.puerto)
 
+    #Funcion comunica la posicion Azimut
     def comunicarAzimut(self):
         while True:
-	    print(self.getAz())
+	    grados = self.getAz()[0:3]
+            self.sender.send_message('info','D{}'.format(grados))
+	    #print(grados)
             time.sleep(10)
 	
     # Al instanciar iniciamos abriendo el puerto serie
@@ -115,7 +120,7 @@ class montura(monturaGloria):
 
     # Devuelve el valor de azimut
     def getAz(self):
-        print('Devuelve el azimut')
+        #print('Devuelve el azimut')
         mensaje = ':GZ#'
         # Devuelve DDD*MM:SS#
         azimut = self.getPosicion(mensaje)
