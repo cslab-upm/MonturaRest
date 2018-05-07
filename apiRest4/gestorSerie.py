@@ -34,6 +34,7 @@ class gestorSerie:
     def leerPuerto(self):
 	out = ''
 	time.sleep(1.5) ###########################
+	#time.sleep(2) ###########################
 	while self.ser.inWaiting() > 0:
 		out += self.ser.read(1)
         return out

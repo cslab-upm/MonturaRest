@@ -13,7 +13,6 @@ class montura(monturaGloria):
     home = None
     permitirMovimiento = True
     cola = None
-    sender = rmq.RabbitMQ_sender('montura', "192.168.1.5")
 
     # Posicion
     az = '+00:00:00'
@@ -71,13 +70,14 @@ class montura(monturaGloria):
     def __init__(self):
         print('Iniciando...')
         self.iniciarSerie()
-        self.getRA()
+        """self.getRA()
         self.getDec()
         self.getAz()
         self.getAlt()
-	thread = Thread(target = self.comunicarAzimut)
-	thread.start()
-
+    	#self.sender = rmq.RabbitMQ_sender('montura', "192.168.1.5")
+	#thread = Thread(target = self.comunicarAzimut)
+	#thread.start()
+	"""
     def setCola(self, cola):
         self.cola = cola
 
@@ -113,7 +113,7 @@ class montura(monturaGloria):
         mensaje = ':GA#'
         # Devuelve sDD*MM:SS# pero detecta el * como simbolo desconocido
         altitud = self.getPosicion(mensaje)
-	print(altitud)
+	#print(altitud)
         altitud = altitud[0:3]+":"+altitud[4:-1]
         self.alt = altitud
         return altitud
@@ -130,6 +130,7 @@ class montura(monturaGloria):
 
     # Obtiene la posicion en la que se encuentra el telescopio
     def getPosicion(self, mensaje):
+	#print mensaje
         respuesta = self.serial.enviar(mensaje, respuesta = True)
         return respuesta
 
@@ -452,4 +453,9 @@ class montura(monturaGloria):
     def stop(self, noBloquear = False):
         self.permitirMovimiento = noBloquear
         mensaje = ':Q#'
-        self.serial.enviar(mensaje)            
+        self.serial.enviar(mensaje)  
+
+def main():
+    a = montura()
+if __name__ == '__main__':
+    main()          
